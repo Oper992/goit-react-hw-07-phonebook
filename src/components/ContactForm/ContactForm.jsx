@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import style from './ContactForm.module.css';
 import { nanoid } from 'nanoid';
-import { addContact } from '..//../redux/contacts';
+// import { addContact } from '..//../redux/contacts';
 import { useSelector, useDispatch } from 'react-redux';
 import { postContact } from '../../redux/operations';
-import * as api from '../../api/contactsApi';
+// import * as api from '../../api/contactsApi';
 
 const INITIAL_STATE = {
   name: '',
