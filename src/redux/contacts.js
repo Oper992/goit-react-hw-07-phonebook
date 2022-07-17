@@ -1,8 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { postContact } from './operations';
 
 const slice = createSlice({
   name: 'phonebook',
-  initialState: { contacts: [], filter: '' },
+  initialState: { contacts: [], isLoading: false, error: null, filter: '' },
   reducers: {
     addContact(state, action) {
       state.contacts.push(action.payload);
@@ -15,6 +16,15 @@ const slice = createSlice({
       state.contacts = state.contacts.filter(
         ({ name }) => name !== action.payload
       );
+    },
+  },
+  extraReducers: {
+    [postContact.pending]: state => (state.isLoading = true),
+    [postContact.fulfilled](state, { payload }) {
+      return { ...state, contacts: [...state.contacts, payload] };
+    },
+    [postContact.rejected](state, { payload }) {
+      state.error = payload;
     },
   },
 });

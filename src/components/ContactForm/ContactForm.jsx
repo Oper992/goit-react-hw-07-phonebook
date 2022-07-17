@@ -3,6 +3,8 @@ import style from './ContactForm.module.css';
 import { nanoid } from 'nanoid';
 import { addContact } from '..//../redux/contacts';
 import { useSelector, useDispatch } from 'react-redux';
+import { postContact } from '../../redux/operations';
+import * as api from '../../api/contactsApi';
 
 const INITIAL_STATE = {
   name: '',
@@ -26,7 +28,7 @@ export default function ContactForm() {
     }
   };
 
-  const handleSubmit = e => {
+  const handleSubmit = async e => {
     e.preventDefault();
 
     addContacts(name, number);
@@ -52,8 +54,17 @@ export default function ContactForm() {
       window.alert(`${contactName} is already in contacts`);
     } else {
       dispatch(
-        addContact({ id: id, name: contactName, number: contactNumber })
+        postContact({
+          id: id,
+          name: contactName,
+          phone: contactNumber,
+        })
       );
+      // console.log(postContact({ id, contactName, contactNumber }))
+
+      // dispatch(
+      //   addContact({ id: id, name: contactName, number: contactNumber })
+      // );
     }
   };
 
