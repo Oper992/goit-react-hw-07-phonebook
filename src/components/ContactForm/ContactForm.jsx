@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import style from './ContactForm.module.css';
-import { nanoid } from 'nanoid';
+// import { nanoid } from 'nanoid';
 // import { addContact } from '..//../redux/contacts';
 import { useSelector, useDispatch } from 'react-redux';
 import { postContact } from '../../redux/operations';
@@ -44,7 +44,7 @@ export default function ContactForm() {
   };
 
   const addContacts = (contactName, contactNumber) => {
-    const id = nanoid();
+    // const id = nanoid();
 
     if (
       contacts.some(
@@ -55,16 +55,10 @@ export default function ContactForm() {
     } else {
       dispatch(
         postContact({
-          id: id,
           name: contactName,
           phone: contactNumber,
         })
       );
-      // console.log(postContact({ id, contactName, contactNumber }))
-
-      // dispatch(
-      //   addContact({ id: id, name: contactName, number: contactNumber })
-      // );
     }
   };
 
