@@ -1,20 +1,14 @@
 import style from './ContactList.module.css';
 import { useSelector, useDispatch } from 'react-redux';
-// import { deleteContacts } from '..//../redux/contacts';
-import { useEffect } from 'react';
-import { getContacts, deleteContact } from '../../redux/operations.js';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { deleteContact } from 'redux/operations.js';
+import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
 
 export default function ContactList() {
   const contacts = useSelector(state => state.phonebook.contacts);
   const filter = useSelector(state => state.phonebook.filter);
-  const isLoading = useSelector(state => state.phonebook.isLoading);
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    if (isLoading === false) {
-      dispatch(getContacts());
-    }
-  }, [dispatch, isLoading]);
 
   const filteredContacts = () => {
     return contacts.filter(({ name }) =>
@@ -24,14 +18,15 @@ export default function ContactList() {
 
   const deleteContacts = e => {
     dispatch(deleteContact(e.target.value));
+    toast.success(`The contact has been deleted`);
   };
 
   return (
     <>
       {filteredContacts().length ? (
-        <ul>
+        <ul className={style.list}>
           {filteredContacts().map(({ name, id, phone }) => (
-            <li key={id}>
+            <li key={id} className={style.contact}>
               {name}: {phone}
               <button
                 type="button"
@@ -47,6 +42,7 @@ export default function ContactList() {
       ) : (
         <p>So far no contacts</p>
       )}
+      <ToastContainer />
     </>
   );
 }

@@ -1,10 +1,13 @@
 import { useState } from 'react';
 import style from './ContactForm.module.css';
-// import { nanoid } from 'nanoid';
-// import { addContact } from '..//../redux/contacts';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { useSelector, useDispatch } from 'react-redux';
-import { postContact } from '../../redux/operations';
+import { postContact } from 'redux/operations';
 // import * as api from '../../api/contactsApi';
+import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
+import { BallTriangle } from 'react-loader-spinner';
+// import { getContacts } from 'redux/operations.js';
 
 const INITIAL_STATE = {
   name: '',
@@ -14,7 +17,9 @@ const INITIAL_STATE = {
 export default function ContactForm() {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
+  const isLoading = useSelector(state => state.phonebook.isLoading);
   const contacts = useSelector(state => state.phonebook.contacts);
+  const post = useSelector(state => state.phonebook.post);
   const dispatch = useDispatch();
 
   const handleChange = e => {
@@ -32,6 +37,8 @@ export default function ContactForm() {
     e.preventDefault();
 
     addContacts(name, number);
+
+    toast.success(`Contact ${name} has been added`);
 
     reset();
   };
@@ -82,7 +89,12 @@ export default function ContactForm() {
         required
         onChange={handleChange}
       />
-      <button type="submit">Add contact</button>
+      {isLoading && post === 'pending' ? (
+        <BallTriangle color="#00BFFF" height={30} width={30} />
+      ) : (
+        <button type="submit">Add contact</button>
+      )}
+      <ToastContainer />
     </form>
   );
 }

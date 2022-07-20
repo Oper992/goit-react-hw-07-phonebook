@@ -1,5 +1,5 @@
 import style from './Filter.module.css';
-import { addFilter } from '..//../redux/contacts';
+import { addFilter } from 'redux/contacts';
 import { useSelector, useDispatch } from 'react-redux';
 
 export default function Filter() {

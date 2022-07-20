@@ -10,7 +10,9 @@
 }
 
 .filteredContacts {
-  border-top: 1px solid gray;
-  padding-left: 10px;
+  width: 350px;
+  display: block;
+  margin: 0 auto;
+  text-align: center;
   margin-top: 20px;
 }
